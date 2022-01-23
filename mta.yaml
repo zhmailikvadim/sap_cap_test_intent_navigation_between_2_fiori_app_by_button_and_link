@@ -71,6 +71,10 @@ modules:
       - fiorimodels.zip
       name: fiorimodels
       target-path: resources/
+    - artifacts:
+      - models1display.zip
+      name: models1display
+      target-path: resources/
 - name: fiorikinds
   type: html5
   path: app/fiorikinds
@@ -91,6 +95,16 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+- name: models1display
+  type: html5
+  path: app/models1_display
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
 resources:
 - name: cat_navi-db
   type: com.sap.xs.hdi-container
@@ -100,8 +114,6 @@ resources:
   properties:
     hdi-service-name: ${service-name}
 - name: cat_navi-destination-service
-  requires:
-    - name: srv-api
   type: org.cloudfoundry.managed-service
   parameters:
     config:
@@ -119,6 +131,8 @@ resources:
     service: destination
     service-name: cat_navi-destination-service
     service-plan: lite
+  requires:
+  - name: srv-api
 - name: cat_navi_html_repo_host
   type: org.cloudfoundry.managed-service
   parameters:
