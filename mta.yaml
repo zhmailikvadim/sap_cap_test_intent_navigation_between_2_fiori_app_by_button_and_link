@@ -1,0 +1,143 @@
+_schema-version: "3.1"
+ID: cat_navi
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: cat_navi-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: cat_navi-db
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: npm-ci
+- name: cat_navi-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: cat_navi-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: cat_navi-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: cat_navi-destination-service
+    parameters:
+      content-target: true
+  - name: cat_navi_html_repo_host
+    parameters:
+      service-key:
+        name: cat_navi_html_repo_host-key
+  - name: uaa_cat_navi
+    parameters:
+      service-key:
+        name: uaa_cat_navi-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: my_service2_cat_navi_html_repo_host
+          ServiceInstanceName: cat_navi-html5-app-host-service
+          ServiceKeyName: cat_navi_html_repo_host-key
+          sap.cloud.service: my_service2
+        - Authentication: OAuth2UserTokenExchange
+          Name: my_service2_uaa_cat_navi
+          ServiceInstanceName: cat_navi-xsuaa-service
+          ServiceKeyName: uaa_cat_navi-key
+          sap.cloud.service: my_service2
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: cat_navi-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: cat_navi_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - fiorikinds.zip
+      name: fiorikinds
+      target-path: resources/
+    - artifacts:
+      - fiorimodels.zip
+      name: fiorimodels
+      target-path: resources/
+- name: fiorikinds
+  type: html5
+  path: app/fiorikinds
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: fiorimodels
+  type: html5
+  path: app/fiorimodels
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: cat_navi-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+  properties:
+    hdi-service-name: ${service-name}
+- name: cat_navi-destination-service
+  requires:
+    - name: srv-api
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: cat_navi
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: cat_navi-destination-service
+    service-plan: lite
+- name: cat_navi_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: cat_navi-html5-app-host-service
+    service-plan: app-host
+- name: uaa_cat_navi
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: cat_navi-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx -p @sap/cds-dk cds build --production

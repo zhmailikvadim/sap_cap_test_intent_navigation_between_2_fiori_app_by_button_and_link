@@ -1,0 +1,2342 @@
+{
+  "definitions": {
+    "Name": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 50
+    },
+    "LDescription": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 500
+    },
+    "custom.managed": {
+      "kind": "aspect",
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "createdAt"
+            ]
+          }
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "createdBy"
+            ]
+          },
+          "length": 255
+        },
+        "LastChangedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedAt"
+            ]
+          }
+        },
+        "LastChangedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedBy"
+            ]
+          },
+          "length": 255
+        }
+      }
+    },
+    "TextInfo": {
+      "kind": "aspect",
+      "elements": {
+        "name": {
+          "type": "Name",
+          "length": 50
+        },
+        "description": {
+          "type": "LDescription",
+          "length": 500
+        }
+      }
+    },
+    "app.cat.Name": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 50
+    },
+    "app.cat.LDescription": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 500
+    },
+    "app.cat.tyIntentNavigationString": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 200
+    },
+    "app.cat.Kinds": {
+      "kind": "entity",
+      "includes": [
+        "cuid",
+        "custom.managed",
+        "TextInfo"
+      ],
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "createdAt"
+            ]
+          }
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "createdBy"
+            ]
+          },
+          "length": 255
+        },
+        "LastChangedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedAt"
+            ]
+          }
+        },
+        "LastChangedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedBy"
+            ]
+          },
+          "length": 255
+        },
+        "name": {
+          "type": "Name",
+          "length": 50
+        },
+        "description": {
+          "type": "LDescription",
+          "length": 500
+        },
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "to_children": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "app.cat.Models",
+          "on": [
+            {
+              "ref": [
+                "to_children",
+                "ID_parent"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "app.cat.Models": {
+      "kind": "entity",
+      "includes": [
+        "cuid",
+        "custom.managed",
+        "TextInfo"
+      ],
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "createdAt"
+            ]
+          }
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "createdBy"
+            ]
+          },
+          "length": 255
+        },
+        "LastChangedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedAt"
+            ]
+          }
+        },
+        "LastChangedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedBy"
+            ]
+          },
+          "length": 255
+        },
+        "name": {
+          "type": "Name",
+          "length": 50
+        },
+        "description": {
+          "type": "LDescription",
+          "length": 500
+        },
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "ID_parent": {
+          "type": "cds.Association",
+          "target": "app.cat.Kinds",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "to_children": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "app.cat.Components",
+          "on": [
+            {
+              "ref": [
+                "to_children",
+                "ID_parent"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "app.cat.Components": {
+      "kind": "entity",
+      "includes": [
+        "cuid",
+        "custom.managed",
+        "TextInfo"
+      ],
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "createdAt"
+            ]
+          }
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "createdBy"
+            ]
+          },
+          "length": 255
+        },
+        "LastChangedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedAt"
+            ]
+          }
+        },
+        "LastChangedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedBy"
+            ]
+          },
+          "length": 255
+        },
+        "name": {
+          "type": "Name",
+          "length": 50
+        },
+        "description": {
+          "type": "LDescription",
+          "length": 500
+        },
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "ID_parent": {
+          "type": "cds.Association",
+          "target": "app.cat.Models",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "to_children": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "app.cat.Adapters",
+          "on": [
+            {
+              "ref": [
+                "to_children",
+                "ID_parent"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "app.cat.Adapters": {
+      "kind": "entity",
+      "includes": [
+        "cuid",
+        "custom.managed",
+        "TextInfo"
+      ],
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "createdAt"
+            ]
+          }
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "createdBy"
+            ]
+          },
+          "length": 255
+        },
+        "LastChangedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedAt"
+            ]
+          }
+        },
+        "LastChangedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedBy"
+            ]
+          },
+          "length": 255
+        },
+        "name": {
+          "type": "Name",
+          "length": 50
+        },
+        "description": {
+          "type": "LDescription",
+          "length": 500
+        },
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "ID_parent": {
+          "type": "cds.Association",
+          "target": "app.cat.Components",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CatalogService": {
+      "@source": "srv/service.cds",
+      "kind": "service"
+    },
+    "CatalogService.Kinds": {
+      "kind": "entity",
+      "@odata.draft.enabled": true,
+      "@Capabilities.DeleteRestrictions.Deletable": true,
+      "@Capabilities.InsertRestrictions.Insertable": true,
+      "@Capabilities.UpdateRestrictions.Updatable": true,
+      "@UI.PresentationVariant.Text": "Default",
+      "@UI.PresentationVariant.Visualizations": [
+        "@UI.LineItem"
+      ],
+      "@UI.PresentationVariant.SortOrder": [
+        {
+          "$Type": "Common.SortOrderType",
+          "Property": {
+            "=": "name"
+          },
+          "Descending": false
+        }
+      ],
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        },
+        {
+          "Value": {
+            "=": "description"
+          }
+        }
+      ],
+      "@UI.SelectionFields": [
+        {
+          "=": "name"
+        },
+        {
+          "=": "description"
+        }
+      ],
+      "@UI.HeaderInfo.TypeName": "Kind",
+      "@UI.HeaderInfo.TypeNamePlural": "Kinds",
+      "@UI.HeaderInfo.Title.$Type": "UI.DataField",
+      "@UI.HeaderInfo.Title.Value": {
+        "=": "name"
+      },
+      "@UI.HeaderInfo.Description.$Type": "UI.DataField",
+      "@UI.HeaderInfo.Description.Value": {
+        "=": "description"
+      },
+      "@UI.LineItem": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        },
+        {
+          "Value": {
+            "=": "description"
+          }
+        },
+        {
+          "$Type": "UI.DataFieldForAction",
+          "Action": "CatalogService.CreateChildEntity",
+          "Label": "CreateChildEntity"
+        },
+        {
+          "$Type": "UI.DataFieldForIntentBasedNavigation",
+          "SemanticObject": "components_semobj",
+          "Action": "manage?id='50'",
+          "Label": "IntentNavigation",
+          "RequiresContext": true
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.CollectionFacet",
+          "Label": "Kind",
+          "ID": "Kind",
+          "Facets": [
+            {
+              "$Type": "UI.ReferenceFacet",
+              "ID": "KindData",
+              "Target": "@UI.FieldGroup#MainData",
+              "Label": "Kind"
+            },
+            {
+              "$Type": "UI.ReferenceFacet",
+              "Label": "administrativeData",
+              "Target": "@UI.FieldGroup#AdministrativeData"
+            }
+          ]
+        },
+        {
+          "$Type": "UI.ReferenceFacet",
+          "Target": "to_children/@UI.LineItem",
+          "Label": "Models"
+        }
+      ],
+      "@UI.FieldGroup#MainData.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#MainData.Label": "Kind",
+      "@UI.FieldGroup#MainData.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "description"
+          }
+        }
+      ],
+      "@UI.FieldGroup#AdministrativeData.Label": "administrativeData",
+      "@UI.FieldGroup#AdministrativeData.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "createdAt"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "createdBy"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "LastChangedAt"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "LastChangedBy"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "ID"
+          }
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "app.cat.Kinds"
+          ]
+        },
+        "columns": [
+          "*"
+        ]
+      },
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "createdAt"
+            ]
+          }
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "createdBy"
+            ]
+          },
+          "length": 255
+        },
+        "LastChangedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedAt"
+            ]
+          }
+        },
+        "LastChangedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedBy"
+            ]
+          },
+          "length": 255
+        },
+        "name": {
+          "@title": "Name",
+          "type": "Name",
+          "length": 50
+        },
+        "description": {
+          "@title": "Description",
+          "type": "LDescription",
+          "length": 500
+        },
+        "ID": {
+          "@readonly": true,
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "to_children": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "CatalogService.Models",
+          "on": [
+            {
+              "ref": [
+                "to_children",
+                "ID_parent"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      },
+      "actions": {
+        "CreateChildEntity": {
+          "kind": "action",
+          "@sap.applicable.path": "CreateChildEntityEnabled"
+        }
+      }
+    },
+    "CatalogService.Models": {
+      "kind": "entity",
+      "@odata.draft.enabled": true,
+      "@Capabilities.DeleteRestrictions.Deletable": true,
+      "@Capabilities.InsertRestrictions.Insertable": true,
+      "@Capabilities.UpdateRestrictions.Updatable": true,
+      "@UI.CreateHidden": false,
+      "@UI.PresentationVariant.Text": "Default",
+      "@UI.PresentationVariant.Visualizations": [
+        "@UI.LineItem"
+      ],
+      "@UI.PresentationVariant.SortOrder": [
+        {
+          "$Type": "Common.SortOrderType",
+          "Property": {
+            "=": "name"
+          },
+          "Descending": false
+        }
+      ],
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        },
+        {
+          "Value": {
+            "=": "description"
+          }
+        }
+      ],
+      "@UI.SelectionFields": [
+        {
+          "=": "name"
+        },
+        {
+          "=": "description"
+        }
+      ],
+      "@UI.HeaderInfo.TypeName": "Model",
+      "@UI.HeaderInfo.TypeNamePlural": "Models",
+      "@UI.HeaderInfo.Title.$Type": "UI.DataField",
+      "@UI.HeaderInfo.Title.Value": {
+        "=": "name"
+      },
+      "@UI.HeaderInfo.Description.$Type": "UI.DataField",
+      "@UI.HeaderInfo.Description.Value": {
+        "=": "description"
+      },
+      "@UI.LineItem": [
+        {
+          "Value": {
+            "=": "name"
+          },
+          "Label": "Model"
+        },
+        {
+          "Value": {
+            "=": "description"
+          }
+        },
+        {
+          "Value": {
+            "=": "ID_parent_ID"
+          }
+        },
+        {
+          "$Type": "UI.DataFieldForAction",
+          "Action": "CatalogService.CreateChildEntity",
+          "Label": "CreateChildEntity"
+        },
+        {
+          "$Type": "UI.DataFieldForIntentBasedNavigation",
+          "SemanticObject": "models_semobj",
+          "Action": "manage",
+          "Label": "IntentNavigation",
+          "RequiresContext": true
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.CollectionFacet",
+          "Label": "Model",
+          "ID": "Model",
+          "Facets": [
+            {
+              "$Type": "UI.ReferenceFacet",
+              "ID": "ModelData",
+              "Target": "@UI.FieldGroup#MainData",
+              "Label": "Kind"
+            },
+            {
+              "$Type": "UI.ReferenceFacet",
+              "Label": "administrativeData",
+              "Target": "@UI.FieldGroup#AdministrativeData"
+            }
+          ]
+        },
+        {
+          "$Type": "UI.ReferenceFacet",
+          "Target": "to_children/@UI.LineItem",
+          "Label": "Cmponents"
+        }
+      ],
+      "@UI.FieldGroup#MainData.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#MainData.Label": "Model",
+      "@UI.FieldGroup#MainData.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "description"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "ID_parent_ID"
+          }
+        }
+      ],
+      "@UI.FieldGroup#AdministrativeData.Label": "administrativeData",
+      "@UI.FieldGroup#AdministrativeData.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "createdAt"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "createdBy"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "LastChangedAt"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "LastChangedBy"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "ID_parent_ID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "ID"
+          }
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "app.cat.Models"
+          ]
+        },
+        "columns": [
+          "*"
+        ]
+      },
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "createdAt"
+            ]
+          }
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "createdBy"
+            ]
+          },
+          "length": 255
+        },
+        "LastChangedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedAt"
+            ]
+          }
+        },
+        "LastChangedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedBy"
+            ]
+          },
+          "length": 255
+        },
+        "name": {
+          "@title": "Name",
+          "@Common.SemanticObject": "models_semobj",
+          "type": "Name",
+          "length": 50
+        },
+        "description": {
+          "@title": "Description",
+          "type": "LDescription",
+          "length": 500
+        },
+        "ID": {
+          "@readonly": true,
+          "@title": "ID",
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "ID_parent": {
+          "@title": "IdKind",
+          "type": "cds.Association",
+          "target": "CatalogService.Kinds",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "to_children": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "CatalogService.Components",
+          "on": [
+            {
+              "ref": [
+                "to_children",
+                "ID_parent"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      },
+      "actions": {
+        "CreateChildEntity": {
+          "kind": "action",
+          "@sap.applicable.path": "CreateChildEntityEnabled"
+        }
+      }
+    },
+    "CatalogService.Components": {
+      "kind": "entity",
+      "@odata.draft.enabled": true,
+      "@Capabilities.DeleteRestrictions.Deletable": true,
+      "@Capabilities.InsertRestrictions.Insertable": true,
+      "@Capabilities.UpdateRestrictions.Updatable": true,
+      "@UI.PresentationVariant.Text": "Default",
+      "@UI.PresentationVariant.Visualizations": [
+        "@UI.LineItem"
+      ],
+      "@UI.PresentationVariant.SortOrder": [
+        {
+          "$Type": "Common.SortOrderType",
+          "Property": {
+            "=": "name"
+          },
+          "Descending": false
+        }
+      ],
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        },
+        {
+          "Value": {
+            "=": "description"
+          }
+        }
+      ],
+      "@UI.SelectionFields": [
+        {
+          "=": "name"
+        },
+        {
+          "=": "description"
+        }
+      ],
+      "@UI.HeaderInfo.TypeName": "Component",
+      "@UI.HeaderInfo.TypeNamePlural": "Components",
+      "@UI.HeaderInfo.Title.$Type": "UI.DataField",
+      "@UI.HeaderInfo.Title.Value": {
+        "=": "name"
+      },
+      "@UI.HeaderInfo.Description.$Type": "UI.DataField",
+      "@UI.HeaderInfo.Description.Value": {
+        "=": "description"
+      },
+      "@UI.LineItem": [
+        {
+          "Value": {
+            "=": "name"
+          },
+          "Label": "Component"
+        },
+        {
+          "Value": {
+            "=": "description"
+          }
+        },
+        {
+          "$Type": "UI.DataFieldForAction",
+          "Action": "CatalogService.CreateChildEntity",
+          "Label": "CreateChildEntity"
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.CollectionFacet",
+          "Label": "Model",
+          "ID": "Component",
+          "Facets": [
+            {
+              "$Type": "UI.ReferenceFacet",
+              "ID": "ComponentData",
+              "Target": "@UI.FieldGroup#MainData",
+              "Label": "Component"
+            },
+            {
+              "$Type": "UI.ReferenceFacet",
+              "Label": "administrativeData",
+              "Target": "@UI.FieldGroup#AdministrativeData"
+            }
+          ]
+        },
+        {
+          "$Type": "UI.ReferenceFacet",
+          "Target": "to_children/@UI.LineItem",
+          "Label": "Adapters"
+        }
+      ],
+      "@UI.FieldGroup#MainData.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#MainData.Label": "Model",
+      "@UI.FieldGroup#MainData.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "description"
+          }
+        }
+      ],
+      "@UI.FieldGroup#AdministrativeData.Label": "administrativeData",
+      "@UI.FieldGroup#AdministrativeData.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "createdAt"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "createdBy"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "LastChangedAt"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "LastChangedBy"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "ID_parent_ID"
+          }
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "app.cat.Components"
+          ]
+        },
+        "columns": [
+          "*"
+        ]
+      },
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "createdAt"
+            ]
+          }
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "createdBy"
+            ]
+          },
+          "length": 255
+        },
+        "LastChangedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedAt"
+            ]
+          }
+        },
+        "LastChangedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedBy"
+            ]
+          },
+          "length": 255
+        },
+        "name": {
+          "@title": "Name",
+          "type": "Name",
+          "length": 50
+        },
+        "description": {
+          "@title": "Description",
+          "type": "LDescription",
+          "length": 500
+        },
+        "ID": {
+          "@readonly": true,
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "ID_parent": {
+          "@title": "ID_Model",
+          "type": "cds.Association",
+          "target": "CatalogService.Models",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "to_children": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "CatalogService.Adapters",
+          "on": [
+            {
+              "ref": [
+                "to_children",
+                "ID_parent"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      },
+      "actions": {
+        "CreateChildEntity": {
+          "kind": "action",
+          "@sap.applicable.path": "CreateChildEntityEnabled"
+        }
+      }
+    },
+    "CatalogService.Adapters": {
+      "kind": "entity",
+      "@odata.draft.enabled": true,
+      "@Capabilities.DeleteRestrictions.Deletable": true,
+      "@Capabilities.InsertRestrictions.Insertable": true,
+      "@Capabilities.UpdateRestrictions.Updatable": true,
+      "@UI.PresentationVariant.Text": "Default",
+      "@UI.PresentationVariant.Visualizations": [
+        "@UI.LineItem"
+      ],
+      "@UI.PresentationVariant.SortOrder": [
+        {
+          "$Type": "Common.SortOrderType",
+          "Property": {
+            "=": "name"
+          },
+          "Descending": false
+        }
+      ],
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        },
+        {
+          "Value": {
+            "=": "description"
+          }
+        }
+      ],
+      "@UI.SelectionFields": [
+        {
+          "=": "name"
+        },
+        {
+          "=": "description"
+        }
+      ],
+      "@UI.HeaderInfo.TypeName": "Adapter",
+      "@UI.HeaderInfo.TypeNamePlural": "Adapters",
+      "@UI.HeaderInfo.Title.$Type": "UI.DataField",
+      "@UI.HeaderInfo.Title.Value": {
+        "=": "name"
+      },
+      "@UI.HeaderInfo.Description.$Type": "UI.DataField",
+      "@UI.HeaderInfo.Description.Value": {
+        "=": "description"
+      },
+      "@UI.LineItem": [
+        {
+          "Value": {
+            "=": "name"
+          },
+          "Label": "Adapter"
+        },
+        {
+          "Value": {
+            "=": "description"
+          }
+        },
+        {
+          "$Type": "UI.DataFieldForAction",
+          "Action": "CatalogService.CreateChildEntity",
+          "Label": "CreateChildEntity"
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.CollectionFacet",
+          "Label": "Model",
+          "ID": "Adapter",
+          "Facets": [
+            {
+              "$Type": "UI.ReferenceFacet",
+              "ID": "AdapterData",
+              "Target": "@UI.FieldGroup#MainData",
+              "Label": "Adapter"
+            },
+            {
+              "$Type": "UI.ReferenceFacet",
+              "Label": "administrativeData",
+              "Target": "@UI.FieldGroup#AdministrativeData"
+            }
+          ]
+        }
+      ],
+      "@UI.FieldGroup#MainData.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#MainData.Label": "Model",
+      "@UI.FieldGroup#MainData.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "description"
+          }
+        }
+      ],
+      "@UI.FieldGroup#AdministrativeData.Label": "administrativeData",
+      "@UI.FieldGroup#AdministrativeData.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "createdAt"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "createdBy"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "LastChangedAt"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "LastChangedBy"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "ID_parent_ID"
+          }
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "app.cat.Adapters"
+          ]
+        },
+        "columns": [
+          "*"
+        ]
+      },
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "createdAt"
+            ]
+          }
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "createdBy"
+            ]
+          },
+          "length": 255
+        },
+        "LastChangedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedAt"
+            ]
+          }
+        },
+        "LastChangedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": {
+            "ref": [
+              "managed",
+              "modifiedBy"
+            ]
+          },
+          "length": 255
+        },
+        "name": {
+          "@title": "Name",
+          "type": "Name",
+          "length": 50
+        },
+        "description": {
+          "@title": "Description",
+          "type": "LDescription",
+          "length": 500
+        },
+        "ID": {
+          "@readonly": true,
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "ID_parent": {
+          "@title": "ID_Component",
+          "type": "cds.Association",
+          "target": "CatalogService.Components",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CatalogService.Count": {
+      "kind": "function",
+      "returns": {
+        "type": "cds.Integer"
+      }
+    },
+    "Language": {
+      "kind": "type",
+      "@title": "{i18n>Language}",
+      "@description": "{i18n>LanguageCode.Description}",
+      "type": "cds.Association",
+      "target": "sap.common.Languages",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "Currency": {
+      "kind": "type",
+      "@title": "{i18n>Currency}",
+      "@description": "{i18n>CurrencyCode.Description}",
+      "type": "cds.Association",
+      "target": "sap.common.Currencies",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "Country": {
+      "kind": "type",
+      "@title": "{i18n>Country}",
+      "@description": "{i18n>CountryCode.Description}",
+      "type": "cds.Association",
+      "target": "sap.common.Countries",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "sap.common": {
+      "kind": "context"
+    },
+    "sap.common.Languages": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>LanguageCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.common.Languages.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.common.Languages.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.Countries": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CountryCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.common.Countries.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.common.Countries.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.Currencies": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "symbol": {
+          "@title": "{i18n>CurrencySymbol}",
+          "type": "cds.String",
+          "length": 5
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.common.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.common.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.CodeList": {
+      "kind": "aspect",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        }
+      }
+    },
+    "cuid": {
+      "kind": "aspect",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        }
+      }
+    },
+    "managed": {
+      "kind": "aspect",
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        }
+      }
+    },
+    "temporal": {
+      "kind": "aspect",
+      "elements": {
+        "validFrom": {
+          "@cds.valid.from": true,
+          "type": "cds.Timestamp"
+        },
+        "validTo": {
+          "@cds.valid.to": true,
+          "type": "cds.Timestamp"
+        }
+      }
+    },
+    "User": {
+      "kind": "type",
+      "@title": "{i18n>UserID}",
+      "@description": "{i18n>UserID.Description}",
+      "type": "cds.String",
+      "length": 255
+    },
+    "extensible": {
+      "kind": "aspect",
+      "elements": {
+        "extensions__": {
+          "@cds.api.ignore": true,
+          "type": "cds.String"
+        }
+      }
+    },
+    "sap.common.Languages.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>LanguageCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        }
+      }
+    },
+    "sap.common.Countries.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CountryCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    },
+    "sap.common.Currencies.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    }
+  },
+  "meta": {
+    "creator": "CDS Compiler v2.11.4",
+    "flavor": "inferred"
+  },
+  "$version": "2.0"
+}
